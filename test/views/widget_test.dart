@@ -90,15 +90,33 @@ void main() {
       // initial state should show "footlong"
       expect(find.textContaining('footlong sandwich'), findsOneWidget);
 
-      // toggle to six-inch
-      await tester.tap(find.byType(Switch));
+      // toggle to six-inch using the keyed switch
+      await tester.tap(find.byKey(const Key('size_switch')));
       await tester.pumpAndSettle();
       expect(find.textContaining('six-inch sandwich'), findsOneWidget);
 
-      // toggle back to footlong
-      await tester.tap(find.byType(Switch));
+      // toggle back to footlong using the keyed switch
+      await tester.tap(find.byKey(const Key('size_switch')));
       await tester.pumpAndSettle();
       expect(find.textContaining('footlong sandwich'), findsOneWidget);
+    });
+
+    testWidgets('toggles toasted Switch between untoasted and toasted',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const App());
+
+      // initial state should be untoasted
+      expect(find.textContaining('untoasted'), findsOneWidget);
+
+      // toggle to toasted using the keyed switch
+      await tester.tap(find.byKey(const Key('toasted_switch')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('toasted'), findsOneWidget);
+
+      // toggle back to untoasted using the keyed switch
+      await tester.tap(find.byKey(const Key('toasted_switch')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('untoasted'), findsOneWidget);
     });
   });
 

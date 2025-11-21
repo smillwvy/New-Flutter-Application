@@ -1,9 +1,8 @@
 // ignore_for_file: unused_import
-
-// ...existing code...
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
 import 'package:sandwich_shop/repositories/order_repository.dart';
+import 'package:sandwich_shop/repositories/pricing_repository.dart';
 
 enum BreadType { white, wheat, wholemeal }
 
@@ -36,6 +35,7 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   late final OrderRepository _orderRepository;
+  late final PricingRepository _pricingRepository;
   final TextEditingController _notesController = TextEditingController();
   bool _isFootlong = true;
   bool _isToasted = false;
@@ -45,6 +45,7 @@ class _OrderScreenState extends State<OrderScreen> {
   void initState() {
     super.initState();
     _orderRepository = OrderRepository(maxQuantity: widget.maxQuantity);
+    _pricingRepository = PricingRepository();
     _notesController.addListener(() {
       setState(() {});
     });
@@ -106,6 +107,11 @@ class _OrderScreenState extends State<OrderScreen> {
       noteForDisplay = _notesController.text;
     }
 
+    final int totalPrice = _pricingRepository.calculateTotal(
+      quantity: _orderRepository.quantity,
+      isFootlong: _isFootlong,
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -123,6 +129,11 @@ class _OrderScreenState extends State<OrderScreen> {
               breadType: _selectedBreadType,
               orderNote: noteForDisplay,
             ),
+
+          Text(
+            'Total Price: £$totalPrice',
+            style: normalText,
+          ),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
