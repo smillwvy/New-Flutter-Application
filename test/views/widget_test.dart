@@ -57,6 +57,7 @@ void main() {
     });
   });
 
+ //Q2
   group('OrderScreen - Controls', () {
     testWidgets('changes bread type with DropdownMenu',
         (WidgetTester tester) async {
@@ -80,6 +81,24 @@ void main() {
           find.byKey(const Key('notes_textfield')), 'Extra mayo');
       await tester.pump();
       expect(find.text('Note: Extra mayo'), findsOneWidget);
+    });
+
+    testWidgets('toggles size Switch between six-inch and footlong',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const App());
+
+      // initial state should show "footlong"
+      expect(find.textContaining('footlong sandwich'), findsOneWidget);
+
+      // toggle to six-inch
+      await tester.tap(find.byType(Switch));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('six-inch sandwich'), findsOneWidget);
+
+      // toggle back to footlong
+      await tester.tap(find.byType(Switch));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('footlong sandwich'), findsOneWidget);
     });
   });
 
