@@ -8,6 +8,7 @@ void main() {
         (WidgetTester tester) async {
       const App app = App();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       expect(find.byType(OrderScreen), findsOneWidget);
     });
   });
