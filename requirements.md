@@ -31,3 +31,10 @@ The cart page lets sandwich shop customers change their order before checkout. T
 - Add a remove action (trash icon or swipe) for each item.
 - Recalculate and display line subtotals and cart total on every change using the Pricing repository (size + quantity).
 - Show user feedback (snackbar/dialog) on remove/update and display an empty-state view when the cart is cleared.
+
+# Profile Screen Feature
+- Add a basic profile/sign-up screen where users can enter and view their details (name and email; optional extra field). No real auth or storage.
+- Add a temporary link/button at the bottom of the Order screen to open this profile screen.
+- Keep everything local in the UI; no backend calls or data persistence yet.
+- Show a friendly confirmation (e.g., snackbar) when the user taps Save. Save is only enabled when required fields are filled.
+- Use the existing app styles; keep the layout clean and minimal.
