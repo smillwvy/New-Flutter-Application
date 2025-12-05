@@ -9,6 +9,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  static const Key _nameFieldKey = Key('profile_name_field');
+  static const Key _emailFieldKey = Key('profile_email_field');
+  static const Key _extraFieldKey = Key('profile_extra_field');
+  static const Key _saveButtonKey = Key('profile_save_button');
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _extraController = TextEditingController();
@@ -71,6 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const SizedBox(height: 16),
                     TextField(
+                      key: _nameFieldKey,
                       controller: _nameController,
                       decoration: const InputDecoration(
                         labelText: 'Name',
@@ -80,6 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const SizedBox(height: 12),
                     TextField(
+                      key: _emailFieldKey,
                       controller: _emailController,
                       decoration: const InputDecoration(
                         labelText: 'Email',
@@ -90,6 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const SizedBox(height: 12),
                     TextField(
+                      key: _extraFieldKey,
                       controller: _extraController,
                       decoration: const InputDecoration(
                         labelText: 'Extra (optional)',
@@ -99,6 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton.icon(
+                      key: _saveButtonKey,
                       onPressed: _canSave ? _saveProfile : null,
                       icon: const Icon(Icons.check),
                       label: const Text('Save'),
