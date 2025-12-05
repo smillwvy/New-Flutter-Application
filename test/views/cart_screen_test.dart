@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sandwich_shop/views/cart_screen.dart';
-import 'package:sandwich_shop/views/order_screen.dart';
 import 'package:sandwich_shop/models/cart.dart';
 import 'package:sandwich_shop/models/sandwich.dart';
+import 'package:sandwich_shop/views/app_routes.dart';
+import 'package:sandwich_shop/views/cart_screen.dart';
+import 'package:sandwich_shop/views/order_screen.dart';
 
 void main() {
   group('CartScreen', () {
@@ -12,12 +13,16 @@ void main() {
       final Cart emptyCart = Cart();
       final CartScreen cartScreen = CartScreen(cart: emptyCart);
       final MaterialApp app = MaterialApp(
-        home: cartScreen,
+        initialRoute: AppRoutes.cart,
+        routes: {
+          AppRoutes.cart: (context) => cartScreen,
+          AppRoutes.order: (context) => OrderScreen(cart: emptyCart),
+        },
       );
 
       await tester.pumpWidget(app);
 
-      expect(find.text('Cart View'), findsOneWidget);
+      expect(find.text('Cart'), findsWidgets);
       expect(find.text('Total: £0.00'), findsOneWidget);
     });
 
@@ -33,12 +38,16 @@ void main() {
 
       final CartScreen cartScreen = CartScreen(cart: cart);
       final MaterialApp app = MaterialApp(
-        home: cartScreen,
+        initialRoute: AppRoutes.cart,
+        routes: {
+          AppRoutes.cart: (context) => cartScreen,
+          AppRoutes.order: (context) => OrderScreen(cart: cart),
+        },
       );
 
       await tester.pumpWidget(app);
 
-      expect(find.text('Cart View'), findsOneWidget);
+      expect(find.text('Cart'), findsWidgets);
       expect(find.text('Veggie Delight'), findsOneWidget);
       expect(find.text('Footlong on white bread'), findsOneWidget);
       expect(find.text('Qty: 2 - £22.00'), findsOneWidget);
@@ -63,7 +72,11 @@ void main() {
 
       final CartScreen cartScreen = CartScreen(cart: cart);
       final MaterialApp app = MaterialApp(
-        home: cartScreen,
+        initialRoute: AppRoutes.cart,
+        routes: {
+          AppRoutes.cart: (context) => cartScreen,
+          AppRoutes.order: (context) => OrderScreen(cart: cart),
+        },
       );
 
       await tester.pumpWidget(app);
@@ -81,7 +94,11 @@ void main() {
       final Cart cart = Cart();
       final CartScreen cartScreen = CartScreen(cart: cart);
       final MaterialApp app = MaterialApp(
-        home: cartScreen,
+        initialRoute: AppRoutes.cart,
+        routes: {
+          AppRoutes.cart: (context) => cartScreen,
+          AppRoutes.order: (context) => OrderScreen(cart: cart),
+        },
       );
 
       await tester.pumpWidget(app);
@@ -99,7 +116,11 @@ void main() {
       final Cart cart = Cart();
       final CartScreen cartScreen = CartScreen(cart: cart);
       final MaterialApp app = MaterialApp(
-        home: cartScreen,
+        initialRoute: AppRoutes.cart,
+        routes: {
+          AppRoutes.cart: (context) => cartScreen,
+          AppRoutes.order: (context) => OrderScreen(cart: cart),
+        },
       );
 
       await tester.pumpWidget(app);
@@ -130,7 +151,11 @@ void main() {
 
       final CartScreen cartScreen = CartScreen(cart: cart);
       final MaterialApp app = MaterialApp(
-        home: cartScreen,
+        initialRoute: AppRoutes.cart,
+        routes: {
+          AppRoutes.cart: (context) => cartScreen,
+          AppRoutes.order: (context) => OrderScreen(cart: cart),
+        },
       );
 
       await tester.pumpWidget(app);
