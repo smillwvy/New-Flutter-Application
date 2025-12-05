@@ -21,6 +21,32 @@ class _CartScreenState extends State<CartScreen> {
     Navigator.pop(context);
   }
 
+  void _incrementItem(Sandwich sandwich) {
+    setState(() {
+      widget.cart.add(sandwich, quantity: 1);
+    });
+  }
+
+  void _decrementItem(Sandwich sandwich) {
+    final currentQuantity = widget.cart.getQuantity(sandwich);
+    if (currentQuantity <= 0) {
+      return;
+    }
+    setState(() {
+      widget.cart.remove(sandwich, quantity: 1);
+    });
+  }
+
+  void _removeItem(Sandwich sandwich) {
+    final currentQuantity = widget.cart.getQuantity(sandwich);
+    if (currentQuantity <= 0) {
+      return;
+    }
+    setState(() {
+      widget.cart.remove(sandwich, quantity: currentQuantity);
+    });
+  }
+
   String _getSizeText(bool isFootlong) {
     if (isFootlong) {
       return 'Footlong';
@@ -67,11 +93,33 @@ class _CartScreenState extends State<CartScreen> {
                       '${_getSizeText(entry.key.isFootlong)} on ${entry.key.breadType.name} bread',
                       style: normalText,
                     ),
-                    Text(
-                      'Qty: ${entry.value} - £${_getItemPrice(entry.key, entry.value).toStringAsFixed(2)}',
-                      style: normalText,
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: () => _decrementItem(entry.key),
+                          icon: const Icon(Icons.remove),
+                        ),
+                        const SizedBox(width: 8),
+                        Text('Qty: ${entry.value}', style: heading2),
+                        const SizedBox(width: 8),
+                        IconButton(
+                          onPressed: () => _incrementItem(entry.key),
+                          icon: const Icon(Icons.add),
+                        ),
+                        const SizedBox(width: 16),
+                        Text(
+                          '£${_getItemPrice(entry.key, entry.value).toStringAsFixed(2)}',
+                          style: heading2,
+                        ),
+                        IconButton(
+                          onPressed: () => _removeItem(entry.key),
+                          icon: const Icon(Icons.delete),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
                   ],
                 ),
               Text(
