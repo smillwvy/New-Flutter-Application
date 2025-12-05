@@ -86,6 +86,38 @@ What to produce for this feature:
   - navigation from OrderScreen to ProfileScreen works.
 
 ------------------------------------------------------------
+FEATURE 3 — Navigation Drawer
+------------------------------------------------------------
+
+Goal:
+Add a navigation Drawer that lets users move between the main screens (Order, Cart, Profile) while reducing duplicated Scaffold/AppBar code.
+
+Expected behavior:
+1) Drawer structure
+   - Drawer lists: Order Screen, Cart Screen, Profile Screen.
+   - Tapping an option navigates with Navigator.push or Navigator.pushReplacement and closes the Drawer.
+2) Shared navigation layout
+   - Drawer is accessible from all primary screens.
+   - Create a shared wrapper widget (e.g., AppScaffold) that holds the AppBar with the menu icon, provides the Drawer, and accepts a body for each screen.
+   - Update existing screens to use this shared wrapper to avoid repeating Scaffold code.
+3) AppBar integration
+   - AppBar shows the hamburger/menu icon to open the Drawer.
+   - Title stays screen-specific (e.g., "Sandwich Counter", "Cart", "Profile").
+4) Responsive navigation (optional)
+   - Basic Drawer first; on wide layouts, Drawer may stay visible as a side panel. On smaller screens it slides in.
+
+What to produce for this feature:
+- A shared Scaffold wrapper (e.g., lib/views/app_scaffold.dart) with AppBar and Drawer support.
+- Updated OrderScreen, CartScreen, and ProfileScreen to use the wrapper.
+- A Drawer widget with navigation links for the main screens and navigation handling when tapped.
+- Widget tests that check Drawer opening, navigation links rendering, tapping links loads the correct screen, and screens still render inside the shared scaffold.
+
+General Notes for this feature:
+- Keep navigation simple and consistent; use ListTile for Drawer items.
+- Ensure Drawer matches existing app styles and structure.
+- Write explanations/comments in simple, beginner-friendly English.
+
+------------------------------------------------------------
 General Notes:
 - Keep solutions simple and beginner-friendly.
 - Follow existing file structure (views/models/repositories).

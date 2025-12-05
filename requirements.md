@@ -38,3 +38,12 @@ The cart page lets sandwich shop customers change their order before checkout. T
 - Keep everything local in the UI; no backend calls or data persistence yet.
 - Show a friendly confirmation (e.g., snackbar) when the user taps Save. Save is only enabled when required fields are filled.
 - Use the existing app styles; keep the layout clean and minimal.
+
+
+# Navigation Drawer Feature
+- Add a navigation Drawer that is available from the main screens (at least Order, Cart and Profile).
+- Each screen should show a menu icon in the AppBar that opens the Drawer.
+- The Drawer should list the main destinations (e.g. Order, Cart, Profile). Tapping a destination navigates to that screen and closes the Drawer.
+- Avoid code duplication by extracting a shared widget (for example, a common Scaffold or Drawer widget) that can be reused by all screens.
+- Update widget tests to cover opening the Drawer and navigating between screens using the Drawer.
+
