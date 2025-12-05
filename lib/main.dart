@@ -18,6 +18,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  // Keep a single cart instance so items stay in sync across screens.
   final Cart _cart = Cart();
 
   @override
@@ -26,6 +27,7 @@ class _AppState extends State<App> {
       title: 'Sandwich Shop App',
       initialRoute: AppRoutes.order,
       routes: {
+        // Main screens share the same cart via constructor injection.
         AppRoutes.order: (context) => OrderScreen(
               cart: _cart,
               maxQuantity: 5,

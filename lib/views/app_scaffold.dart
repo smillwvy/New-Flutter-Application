@@ -15,7 +15,9 @@ class AppScaffold extends StatelessWidget {
   });
 
   void _navigateTo(BuildContext context, String routeName) {
+    // Close the drawer first so navigation feels smooth.
     Navigator.pop(context);
+    // Skip navigation if we are already on the target screen.
     if (routeName == currentRoute) {
       return;
     }
@@ -68,6 +70,7 @@ class AppScaffold extends StatelessWidget {
                 ],
               ),
             ),
+            // Each ListTile is a simple navigation option.
             ListTile(
               key: const Key('drawer_order'),
               leading: const Icon(Icons.fastfood),
