@@ -48,44 +48,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Profile',
-          style: heading2,
-        ),
+        title: const Text('Profile', style: heading2),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Name',
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
-              style: normalText,
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const CircleAvatar(
+                      radius: 32,
+                      child: Icon(Icons.person, size: 36),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                        hintText: 'Enter your name',
+                      ),
+                      style: normalText,
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
+                        hintText: 'you@example.com',
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      style: normalText,
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: _extraController,
+                      decoration: const InputDecoration(
+                        labelText: 'Extra (optional)',
+                        hintText: 'Phone, note, etc.',
+                      ),
+                      style: normalText,
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      onPressed: _canSave ? _saveProfile : null,
+                      icon: const Icon(Icons.check),
+                      label: const Text('Save'),
+                    ),
+                  ],
+                ),
               ),
-              keyboardType: TextInputType.emailAddress,
-              style: normalText,
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: _extraController,
-              decoration: const InputDecoration(
-                labelText: 'Extra (optional)',
-              ),
-              style: normalText,
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: _canSave ? _saveProfile : null,
-              child: const Text('Save'),
             ),
           ],
         ),
