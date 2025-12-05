@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sandwich_shop/views/app_routes.dart';
+import 'package:sandwich_shop/views/app_scaffold.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -51,10 +53,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile', style: heading2),
-      ),
+    return AppScaffold(
+      title: 'Profile',
+      currentRoute: AppRoutes.profile,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

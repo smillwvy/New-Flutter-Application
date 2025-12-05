@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:sandwich_shop/views/app_styles.dart';
-import 'package:sandwich_shop/views/cart_screen.dart';
-import 'package:sandwich_shop/views/profile_screen.dart';
 import 'package:sandwich_shop/models/cart.dart';
 import 'package:sandwich_shop/models/sandwich.dart';
+import 'package:sandwich_shop/views/app_routes.dart';
+import 'package:sandwich_shop/views/app_scaffold.dart';
+import 'package:sandwich_shop/views/app_styles.dart';
 
 class OrderScreen extends StatefulWidget {
   final int maxQuantity;
+  final Cart cart;
 
-  const OrderScreen({super.key, this.maxQuantity = 10});
+  const OrderScreen({
+    super.key,
+    this.maxQuantity = 10,
+    required this.cart,
+  });
 
   @override
   State<OrderScreen> createState() {
@@ -17,7 +22,6 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  final Cart _cart = Cart();
   final TextEditingController _notesController = TextEditingController();
 
   SandwichType _selectedSandwichType = SandwichType.veggieDelight;
@@ -48,7 +52,7 @@ class _OrderScreenState extends State<OrderScreen> {
       );
 
       setState(() {
-        _cart.add(sandwich, quantity: _quantity);
+        widget.cart.add(sandwich, quantity: _quantity);
       });
 
       String sizeText;
@@ -77,12 +81,7 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   void _navigateToCartView() {
-    Navigator.push(
-      context,
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) => CartScreen(cart: _cart),
-      ),
-    );
+    Navigator.pushNamed(context, AppRoutes.cart);
   }
 
   List<DropdownMenuEntry<SandwichType>> _buildSandwichTypeEntries() {
@@ -122,20 +121,9 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 100,
-            child: Image.asset('assets/images/logo.png'),
-          ),
-        ),
-        title: const Text(
-          'Sandwich Counter',
-          style: heading1,
-        ),
-      ),
+    return AppScaffold(
+      title: 'Sandwich Counter',
+      currentRoute: AppRoutes.order,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -207,7 +195,11 @@ class _OrderScreenState extends State<OrderScreen> {
                   ),
                   Text('$_quantity', style: heading2),
                   IconButton(
-                    onPressed: () => setState(() => _quantity++),
+                    onPressed: () {
+                      if (_quantity < widget.maxQuantity) {
+                        setState(() => _quantity++);
+                      }
+                    },
                     icon: const Icon(Icons.add),
                   ),
                 ],
@@ -229,12 +221,7 @@ class _OrderScreenState extends State<OrderScreen> {
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (_) => const ProfileScreen(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, AppRoutes.profile);
                 },
                 child: const Text(
                   'Profile',
@@ -243,7 +230,7 @@ class _OrderScreenState extends State<OrderScreen> {
               ),
               const SizedBox(height: 20),
               Text(
-                'Cart: ${_cart.countOfItems} items - £${_cart.totalPrice.toStringAsFixed(2)}',
+                'Cart: ${widget.cart.countOfItems} items - £${widget.cart.totalPrice.toStringAsFixed(2)}',
                 style: normalText,
                 textAlign: TextAlign.center,
               ),
