@@ -8,6 +8,7 @@ class PricingRepository {
       price = 7.00;
     }
 
+
     return quantity * price;
   }
 }
