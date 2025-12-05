@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:sandwich_shop/views/app_styles.dart';
-import 'package:sandwich_shop/views/order_screen.dart';
-import 'package:sandwich_shop/views/checkout_screen.dart';
 import 'package:sandwich_shop/models/cart.dart';
 import 'package:sandwich_shop/models/sandwich.dart';
 import 'package:sandwich_shop/repositories/pricing_repository.dart';
+import 'package:sandwich_shop/views/app_routes.dart';
+import 'package:sandwich_shop/views/app_scaffold.dart';
+import 'package:sandwich_shop/views/app_styles.dart';
+import 'package:sandwich_shop/views/checkout_screen.dart';
+import 'package:sandwich_shop/views/order_screen.dart';
 
 class CartScreen extends StatefulWidget {
   final Cart cart;
@@ -19,7 +21,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   void _goBack() {
-    Navigator.pop(context);
+    Navigator.pushReplacementNamed(context, AppRoutes.order);
   }
 
   Future<void> _navigateToCheckout() async {
@@ -105,20 +107,9 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 100,
-            child: Image.asset('assets/images/logo.png'),
-          ),
-        ),
-        title: const Text(
-          'Cart View',
-          style: heading1,
-        ),
-      ),
+    return AppScaffold(
+      title: 'Cart',
+      currentRoute: AppRoutes.cart,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -142,16 +133,14 @@ class _CartScreenState extends State<CartScreen> {
                           icon: const Icon(Icons.remove),
                         ),
                         const SizedBox(width: 8),
-                        Text('Qty: ${entry.value}', style: heading2),
+                        Text(
+                          'Qty: ${entry.value} - £${_getItemPrice(entry.key, entry.value).toStringAsFixed(2)}',
+                          style: heading2,
+                        ),
                         const SizedBox(width: 8),
                         IconButton(
                           onPressed: () => _incrementItem(entry.key),
                           icon: const Icon(Icons.add),
-                        ),
-                        const SizedBox(width: 16),
-                        Text(
-                          '£${_getItemPrice(entry.key, entry.value).toStringAsFixed(2)}',
-                          style: heading2,
                         ),
                         IconButton(
                           onPressed: () => _removeItem(entry.key),
